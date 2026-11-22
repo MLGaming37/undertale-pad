@@ -3,20 +3,32 @@
 #include <dt-bindings/zmk/bt.h>
 
 / {
+    behaviors {
+        bt_clear_hold: bt_clear_hold {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            flavor = "tap-preferred";
+            tapping-term-ms = <2000>;
+            bindings = <&bt>, <&none>;
+        };
+    };
+
+    combos {
+        compatible = "zmk,combos";
+        combo_bt_clear {
+            timeout-ms = <150>;
+            key-positions = <0 4 5 6>;
+            bindings = <&bt_clear_hold BT_CLR 0>;
+        };
+    };
+
     keymap {
         compatible = "zmk,keymap";
 
         default_layer {
             bindings = <
                 &kp UP    &kp DOWN  &kp LEFT  &kp RIGHT
-                &kp Z     &kp X     &lt 1 C
-            >;
-        };
-
-        bt_layer {
-            bindings = <
-                &bt BT_CLR   &none   &bt BT_SEL 0  &bt BT_SEL 1
-                &bootloader  &none   &trans
+                &kp Z     &kp X     &kp C
             >;
         };
     };
